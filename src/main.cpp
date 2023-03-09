@@ -1,10 +1,25 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdexcept>
+#include "util/FileParser.cpp"
+#include <filesystem>
+
+float vertices[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f,-0.5f,0.0f,
+        0.0f,0.5f,0.0f
+};
+
+
+
+unsigned int vbo;
 
 
 int main() {
-    GLFWwindow * window;
+    std::array<std::string, 2> shaderSource = fparse::parseShader("src/shaders/basicShader.glsl");
+    std::cout << shaderSource[0] << std::endl;
+    std::cout << shaderSource[1] << std::endl;
+    /*GLFWwindow * window;
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW");
     }
@@ -21,10 +36,15 @@ int main() {
     if (!gladLoadGL()) {
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
     while(!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwSwapBuffers(window);
         glfwPollEvents();
-    }
+    }*/
     return 0;
 }

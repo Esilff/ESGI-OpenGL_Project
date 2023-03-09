@@ -18,3 +18,6 @@ add_library(glad dependencies/glad/src/glad.c)
 #linking GLFW, OpenGL and GLAD
 
 target_link_libraries(${PROJECT_NAME} glfw opengl32 glad)
+
+#set variables that could be used in cpp
+add_compile_definitions(SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
