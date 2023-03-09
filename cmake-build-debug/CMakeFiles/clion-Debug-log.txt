@@ -1,0 +1,5 @@
+C:\Users\Esilff\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.8214.51\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=C:/Users/Esilff/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/223.8214.51/bin/ninja/win/ninja.exe -G Ninja -S C:\Users\Esilff\Git\ESGI-OpenGL_Project -B C:\Users\Esilff\Git\ESGI-OpenGL_Project\cmake-build-debug
+-- Using Win32 for window creation
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/Esilff/Git/ESGI-OpenGL_Project/cmake-build-debug
