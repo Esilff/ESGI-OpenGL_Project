@@ -11,7 +11,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 add_executable(${PROJECT_NAME}
-        src/main.cpp)
+        src/main.cpp src/core/rendering/mesh.h src/core/rendering/mesh.cpp)
 
 #adding GLEW directory to project
 
