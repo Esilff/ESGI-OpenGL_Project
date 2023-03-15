@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(ESGI_OpenGL_Project)
+project(ESGI_OpenGL)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -10,7 +10,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 endif()
 
-add_executable(ESGI_OpenGL_Project
+add_executable(${PROJECT_NAME}
         src/main.cpp)
 
 #adding GLEW directory to project
