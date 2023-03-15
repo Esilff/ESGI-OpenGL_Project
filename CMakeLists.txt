@@ -1,7 +1,14 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.2)
 project(ESGI_OpenGL_Project)
 
 set(CMAKE_CXX_STANDARD 14)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        find_package(OpenGL REQUIRED)
+        set(PROJECT_NAME "${PROJECT_NAME}")
+        configure_file(config.sh.in config.sh @ONLY)
+
+endif()
 
 add_executable(ESGI_OpenGL_Project
         src/main.cpp)
@@ -17,7 +24,12 @@ add_library(glad dependencies/glad/src/glad.c)
 
 #linking GLFW, OpenGL and GLAD
 
-target_link_libraries(${PROJECT_NAME} glfw opengl32 glad)
+target_link_libraries(${PROJECT_NAME} glfw glad)
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+        target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
+else()
+        target_link_libraries(${PROJECT_NAME} opengl32)
+endif()
 #set variables that could be used in cpp
 add_compile_definitions(SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")

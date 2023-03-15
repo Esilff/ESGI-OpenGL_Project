@@ -4,4 +4,8 @@
 
 #Cmake build files
 
+#JetBrains build file
 cmake-build-debug
+
+#generic build file (for vsc)
+build
