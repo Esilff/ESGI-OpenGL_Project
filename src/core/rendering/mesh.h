@@ -8,6 +8,7 @@
 class Mesh {
     std::vector<float> m_vertices;
     unsigned int m_vbo;
+    unsigned int m_vao;
 
 public:
     Mesh();
