@@ -23,6 +23,7 @@ class Mesh {
 
 public:
     Mesh();
+    Mesh(std::vector<float> vertices, std::vector<VertexInfo> format);
     ~Mesh();
     void draw();
 

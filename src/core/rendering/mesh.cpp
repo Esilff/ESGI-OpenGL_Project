@@ -29,6 +29,10 @@ Mesh::Mesh() {
     }
 }
 
+Mesh::Mesh(std::vector<float> vertices, std::vector<VertexInfo> format) {
+    
+}
+
 void Mesh::draw() {
     glDrawArrays(GL_TRIANGLES,0,3);
 }
