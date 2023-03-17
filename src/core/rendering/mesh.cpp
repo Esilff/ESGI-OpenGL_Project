@@ -4,8 +4,7 @@ Mesh::Mesh() {
     m_vertices = {
         -0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,
         0.5f,-0.5f,0.0f,0.0f,1.0f,1.0f,
-        -0.5f,0.5f,0.0f,1.0f,0.0f,1.0f
-        
+        0.0f,0.5f,0.0f,1.0f,0.0f,1.0f
     };
 
     m_vertexFormat = {XYZ,RGB};
@@ -31,7 +30,7 @@ Mesh::Mesh() {
 }
 
 void Mesh::draw() {
-    glDrawArrays(GL_TRIANGLES,0,m_drawCount);
+    glDrawArrays(GL_TRIANGLES,0,3);
 }
 
 int Mesh::vertexInfoLength(VertexInfo vi) {
