@@ -2,12 +2,12 @@
 
 Mesh::Mesh() {
     m_vertices = {
-        -0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,
-        0.5f,-0.5f,0.0f,0.0f,1.0f,1.0f,
-        0.0f,0.5f,0.0f,1.0f,0.0f,1.0f
+        -0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,1.0f,
+        0.5f,-0.5f,0.0f,0.0f,1.0f,1.0f,0.5f,
+        0.0f,0.5f,0.0f,1.0f,0.0f,1.0f,0.0f
     };
 
-    m_vertexFormat = {XYZ,RGB};
+    m_vertexFormat = {XYZ, RGBA};
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
     glGenBuffers(1, &m_vbo);
@@ -40,6 +40,7 @@ void Mesh::draw() {
 int Mesh::vertexInfoLength(VertexInfo vi) {
     if (vi == XY) return 2;
     if (vi == XYZ || vi == RGB) return 3;
+    if (vi == RGBA) return 4;
     return 0;
 }
 

@@ -9,6 +9,7 @@ enum VertexInfo {
     XY,
     XYZ,
     RGB,
+    RGBA
 };
 
 class Mesh {
