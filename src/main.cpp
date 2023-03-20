@@ -34,21 +34,41 @@ int main() {
 
 
     Mesh mesh = Mesh({
-         0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,
-        -0.5f,-0.5f,0.0f,1.0f,0.0f,1.0f,
-         -0.5f,0.5f,0.0f,0.0f,1.0f,1.0f,
-         0.5f,0.5f,0.0f,1.0f,0.0f,0.0f
+         0.5f,-0.5f,0.0f,1.0f,1.0f,
+        -0.5f,-0.5f,0.0f,1.0f,0.0f,
+         -0.5f,0.5f,0.0f,0.0f,0.0f,
+         0.5f,0.5f,0.0f,0.0f,1.0f
     },
 {
         0,1,2,
         3,0,2
     }
-    ,{XYZ, RGB});
+    ,{XYZ, XY});
 
     Shader shader = Shader("src/shaders/basic.glsl");
 
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     int width, height, channels;
-    
+    std::string filePath = SOURCE_DIR;
+    filePath+= "/assets/ats_scaled.png";
+    unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels,0);
+    if (data) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture);
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+
     //Loading vertices
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
