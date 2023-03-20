@@ -7,7 +7,6 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         find_package(OpenGL REQUIRED)
         set(PROJECT_NAME "${PROJECT_NAME}")
         configure_file(config.sh.in config.sh @ONLY)
-
 endif()
 
 add_executable(${PROJECT_NAME}
@@ -19,8 +18,11 @@ add_subdirectory(dependencies/glfw-3.3.8)
 
 #setup GLAD
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glad/include)
+include_directories(dependencies/glad/include)
 add_library(glad dependencies/glad/src/glad.c)
+
+include_directories(dependencies/stb)
+link_directories(dependencies/stb)
 
 #linking GLFW, OpenGL and GLAD
 

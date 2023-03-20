@@ -3,6 +3,8 @@
 #include <stdexcept>
 #include "core/rendering/shader.h"
 #include "core/rendering/mesh.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 float vertices[] = {
         -0.5f, -0.5f, 0.0f,0.8,0.2,0.25,
@@ -44,6 +46,9 @@ int main() {
     ,{XYZ, RGB});
 
     Shader shader = Shader("src/shaders/basic.glsl");
+
+    int width, height, channels;
+    
     //Loading vertices
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
