@@ -31,7 +31,17 @@ int main() {
     }
 
 
-    Mesh mesh = Mesh();
+    Mesh mesh = Mesh({
+         0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,
+        -0.5f,-0.5f,0.0f,1.0f,0.0f,1.0f,
+         -0.5f,0.5f,0.0f,0.0f,1.0f,1.0f,
+         0.5f,0.5f,0.0f,1.0f,0.0f,0.0f
+    },
+{
+        0,1,2,
+        3,0,2
+    }
+    ,{XYZ, RGB});
     //Loading vertices
     std::array<std::string, 2> shaderSource = fparse::parseShader("src/shaders/basic");
     const char* vs = shaderSource[0].c_str();

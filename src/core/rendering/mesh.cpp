@@ -6,13 +6,32 @@ Mesh::Mesh() {
         0.5f,-0.5f,0.0f,0.0f,1.0f,1.0f,0.5f,
         0.0f,0.5f,0.0f,1.0f,0.0f,1.0f,0.0f
     };
-
+    m_indices = {0,1,2};
     m_vertexFormat = {XYZ, RGBA};
+    loadMesh();
+}
+
+Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<VertexInfo> format) {
+    m_vertices = vertices;
+    m_indices = indices;
+    m_vertexFormat = format;
+    loadMesh();
+}
+
+void Mesh::draw() {
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+    glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
+}
+
+void Mesh::loadMesh() {
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
+    glGenBuffers(1, &m_ebo);
     glGenBuffers(1, &m_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), static_cast<void*>(m_vertices.data()), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(int), static_cast<void*>(m_indices.data()), GL_STATIC_DRAW);
     for (int i = 0; i < m_vertexFormat.size(); i++) {
         m_vertexSize += vertexInfoLength(m_vertexFormat[i]);
     }
@@ -27,14 +46,6 @@ Mesh::Mesh() {
         glEnableVertexAttribArray(i);
         offset += vLength;
     }
-}
-
-Mesh::Mesh(std::vector<float> vertices, std::vector<VertexInfo> format) {
-    
-}
-
-void Mesh::draw() {
-    glDrawArrays(GL_TRIANGLES,0,3);
 }
 
 int Mesh::vertexInfoLength(VertexInfo vi) {
