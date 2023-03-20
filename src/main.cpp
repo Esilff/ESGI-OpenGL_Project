@@ -2,16 +2,13 @@
 #include <GLFW/glfw3.h>
 #include <stdexcept>
 #include "util/FileParser.cpp"
+#include "core/rendering/mesh.h"
 
 float vertices[] = {
         -0.5f, -0.5f, 0.0f,0.8,0.2,0.25,
         0.5f,-0.5f,0.0f,0.2,0.4,0.4,
         0.0f,0.5f,0.0f,0.5,0.4,0.8
 };
-
-
-
-unsigned int vbo;
 
 
 int main() {
@@ -32,16 +29,23 @@ int main() {
     if (!gladLoadGL()) {
         throw std::runtime_error("Failed to initialize GLAD");
     }
+
+
+    Mesh mesh = Mesh({
+         0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f,
+        -0.5f,-0.5f,0.0f,1.0f,0.0f,1.0f,
+         -0.5f,0.5f,0.0f,0.0f,1.0f,1.0f,
+         0.5f,0.5f,0.0f,1.0f,0.0f,0.0f
+    },
+{
+        0,1,2,
+        3,0,2
+    }
+    ,{XYZ, RGB});
     //Loading vertices
     std::array<std::string, 2> shaderSource = fparse::parseShader("src/shaders/basic");
     const char* vs = shaderSource[0].c_str();
-    const char* fs = shaderSource[1].c_str();
-    glGenBuffers(1, &vbo);
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    const char* fs = shaderSource[1].c_str();    
     //compiling vertex shader
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -79,10 +83,8 @@ int main() {
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-    glVertexAttribPointer(glGetAttribLocation(shaderProgram, "aPos"), 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*) 0);
-    glVertexAttribPointer(glGetAttribLocation(shaderProgram, "aCol"), 3,GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(shaderProgram, "aPos"));
-    glEnableVertexAttribArray(glGetAttribLocation(shaderProgram, "aCol"));
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     while(!glfwWindowShouldClose(window)) {
         int width, height;
@@ -90,8 +92,7 @@ int main() {
         glClearColor(0.1,0.1,0.1,1.0);
         glClear(GL_COLOR_BUFFER_BIT);
         glUseProgram(shaderProgram);
-        glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        mesh.draw();
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

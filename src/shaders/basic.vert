@@ -1,7 +1,8 @@
-#version 120
-attribute vec3 aPos;
-attribute vec3 aCol;
-varying vec3 vCol;
+#version 330
+layout(location=0)in vec3 aPos;
+layout(location=1)in vec4 aCol;
+out vec4 vCol;
+
 
 void main() {
     vCol = aCol;
