@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include "core/rendering/shader.h"
 #include "core/rendering/mesh.h"
+#include "core/rendering/texture.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -46,28 +47,8 @@ int main() {
     ,{XYZ, XY});
 
     Shader shader = Shader("src/shaders/basic.glsl");
-
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    int width, height, channels;
-    std::string filePath = SOURCE_DIR;
-    filePath+= "/assets/ats_scaled.png";
-    unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &channels,0);
-    if (data) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture);
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+    Texture texture = Texture("assets/ats_scaled.png");
+    
 
     //Loading vertices
     glEnable(GL_BLEND);
@@ -79,6 +60,7 @@ int main() {
         glClearColor(0.1,0.1,0.1,1.0);
         glClear(GL_COLOR_BUFFER_BIT);
         shader.bind();
+        texture.bind();
         mesh.draw();
         glfwSwapBuffers(window);
         glfwPollEvents();
