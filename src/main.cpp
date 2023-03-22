@@ -44,7 +44,7 @@ int main() {
         0,1,2,
         3,0,2
     }
-    ,{XYZ, XY});
+    ,{XYZ, UV});
 
     Shader shader = Shader("src/shaders/basic.glsl");
     Texture texture = Texture("assets/ats_scaled.png");

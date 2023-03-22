@@ -49,7 +49,7 @@ void Mesh::loadMesh() {
 }
 
 int Mesh::vertexInfoLength(VertexInfo vi) {
-    if (vi == XY) return 2;
+    if (vi == XY || vi == UV) return 2;
     if (vi == XYZ || vi == RGB) return 3;
     if (vi == RGBA) return 4;
     return 0;
