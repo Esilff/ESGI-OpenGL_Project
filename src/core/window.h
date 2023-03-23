@@ -3,6 +3,7 @@
 #include <string>
 #include <GLFW/glfw3.h>
 
+
 class Window {
 
     std::string m_name;
@@ -14,7 +15,6 @@ class Window {
     }
     Window(const Window&);
     Window& operator= (const Window& other);
-
     void init();
     void loop();
 
