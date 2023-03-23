@@ -7,4 +7,3 @@ if [ "$1" != '--debug' ]; then
     clear
 fi
 ./${PROJECT_NAME}
-echo $1

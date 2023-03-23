@@ -23,8 +23,14 @@ add_subdirectory(dependencies/glfw-3.3.8)
 include_directories(dependencies/glad/include)
 add_library(glad dependencies/glad/src/glad.c)
 
+#setup stb-image lib
+
 include_directories(dependencies/stb)
 link_directories(dependencies/stb)
+
+#setup jsoncpp
+
+add_subdirectory(dependencies/jsoncpp)
 
 #linking GLFW, OpenGL and GLAD
 
