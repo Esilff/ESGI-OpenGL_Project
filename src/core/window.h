@@ -2,6 +2,7 @@
 #define WINDOW_H
 #include <string>
 #include <GLFW/glfw3.h>
+#include <json/json.h>
 
 
 class Window {

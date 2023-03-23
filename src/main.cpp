@@ -7,6 +7,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+
+
 float vertices[] = {
         -0.5f, -0.5f, 0.0f,0.8,0.2,0.25,
         0.5f,-0.5f,0.0f,0.2,0.4,0.4,
