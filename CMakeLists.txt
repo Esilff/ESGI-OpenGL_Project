@@ -28,14 +28,10 @@ add_library(glad dependencies/glad/src/glad.c)
 include_directories(dependencies/stb)
 link_directories(dependencies/stb)
 
-#setup jsoncpp
-
-add_subdirectory(dependencies/jsoncpp)
-include_directories(dependencies/jsoncpp/include)
-
 #linking GLFW, OpenGL and GLAD
 
-target_link_libraries(${PROJECT_NAME} glfw glad jsoncpp_static)
+target_link_libraries(${PROJECT_NAME} glfw glad)
+
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})
