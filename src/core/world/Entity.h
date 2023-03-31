@@ -10,8 +10,8 @@
 #include "../rendering/mesh.h"
 
 class Entity {
-    Mesh mesh;
-    Shader shader = Shader("src/shaders/basic.glsl");
+    Mesh m_mesh;
+    Shader m_shader;
 
 public:
     Entity();

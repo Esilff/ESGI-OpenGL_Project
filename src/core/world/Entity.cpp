@@ -1,10 +1,10 @@
 #include "Entity.h"
 
 Entity::Entity() {
-    mesh = Mesh();
+    m_mesh = Mesh();
 }
 
 void Entity::update() {
-    shader.bind();
-    mesh.draw();
+    m_shader.bind();
+    m_mesh.draw();
 }

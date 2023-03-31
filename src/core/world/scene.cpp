@@ -11,5 +11,5 @@ void Scene::update() {
 }
 
 void Scene::addEntity() {
-    m_entities.push_back(Entity());
+    m_entities.emplace_back();
 }
