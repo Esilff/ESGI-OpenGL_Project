@@ -28,6 +28,7 @@ class Shader {
 
 public:
     Shader();
+    Shader(const Shader& shader);
     explicit Shader(const std::string &path);
     ~Shader();
 

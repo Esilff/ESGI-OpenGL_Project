@@ -1,22 +1,21 @@
 //
-// Created by Esilff on 23/03/2023.
+// Created by Esilff on 05/04/2023.
 //
 
-#ifndef ESGI_OPENGL_ENTITY_H
-#define ESGI_OPENGL_ENTITY_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
-
-#include "../rendering/shader.h"
 #include "../rendering/mesh.h"
+#include "../rendering/shader.h"
 
-class Entity {
+class Entity{
     Mesh m_mesh;
     Shader m_shader;
-
 public:
     Entity();
+    Entity(const Mesh &mesh, const Shader &shader);
     void update();
 };
 
 
-#endif //ESGI_OPENGL_ENTITY_H
+#endif //ENTITY_H

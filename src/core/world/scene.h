@@ -1,18 +1,23 @@
-#ifndef ESGI_OPENGL_SCENE_H
-#define ESGI_OPENGL_SCENE_H
-#include "Entity.h"
+//
+// Created by Esilff on 05/04/2023.
+//
+
+#ifndef SCENE_H
+#define SCENE_H
+
+
 #include <vector>
+#include "entity.h"
 
 class Scene {
-    bool m_isLoaded;
     std::vector<Entity> m_entities;
 
-public:
-    void load();
-    void update();
 
+public:
+    void update();
     void addEntity();
+    void addEntity(const Entity& e);
 };
 
 
-#endif //ESGI_OPENGL_SCENE_H
+#endif //SCENE_H

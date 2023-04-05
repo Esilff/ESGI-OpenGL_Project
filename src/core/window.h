@@ -6,8 +6,6 @@
 #include <json/json.h>
 #include <fstream>
 #include <stdexcept>
-#include "world/scene.h"
-
 
 class Window {
 
@@ -15,9 +13,6 @@ class Window {
     int m_width;
     int m_height;
     GLFWwindow * m_window;
-    //bool m_sceneLoaded;
-
-    Scene m_scene;
 
     Window() {
         init();

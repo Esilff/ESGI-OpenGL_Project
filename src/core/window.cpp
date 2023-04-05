@@ -1,4 +1,6 @@
 #include "window.h"
+#include "world/entity.h"
+#include "world/scene.h"
 
 void Window::init() {
     setAppParams();
@@ -17,15 +19,23 @@ void Window::init() {
 }
 
 void Window::loop() {
-    m_scene.addEntity();
-   /* Shader shader;
-    Mesh mesh;*/
+    Scene s;
+    s.addEntity();
+    s.addEntity(Entity {
+            Mesh {
+                    {
+                        1.0f,0.0f,0.0f,1.0f,0.0f,0.0f,1.0f,
+                        1.0f,1.0f,0.0f,0.0f,1.0f,0.0f,1.0f,
+                        0.0,1.0f,0.0f,0.0f,0.0f,1.0f,0.0f
+                    },
+                    {0,1,2}, {XYZ, RGBA}
+            }, Shader()
+    });
     while (!glfwWindowShouldClose(m_window)) {
         glClearColor(.1f,.1f,.1f,1.f);
         glClear(GL_COLOR_BUFFER_BIT);
-        m_scene.update();
-        /*shader.bind();
-        mesh.draw();*/
+
+        s.update();
         glfwSwapBuffers(m_window);
         glfwPollEvents();
     }

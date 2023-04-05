@@ -9,14 +9,18 @@ Shader::Shader() {
     loadShader();
 }
 
+Shader::Shader(const Shader& shader) : m_source(shader.m_source), m_program(shader.m_program) {
+    loadShader();
+}
+
 Shader::Shader(const std::string &path) {
     parseShader(path);
     loadShader();
 }
 
 Shader::~Shader() {
-    unbind();
-    glDeleteProgram(m_program);
+    /*unbind();
+    glDeleteProgram(m_program);*/
 }
 
 void Shader::bind() {

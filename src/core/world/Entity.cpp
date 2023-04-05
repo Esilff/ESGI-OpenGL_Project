@@ -1,7 +1,14 @@
-#include "Entity.h"
+//
+// Created by Esilff on 05/04/2023.
+//
 
-Entity::Entity() {
-    m_mesh = Mesh();
+#include "entity.h"
+
+Entity::Entity() {}
+
+Entity::Entity(const Mesh &mesh, const Shader &shader) {
+    m_mesh = mesh;
+    m_shader = shader;
 }
 
 void Entity::update() {
