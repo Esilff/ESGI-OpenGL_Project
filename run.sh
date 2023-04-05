@@ -3,5 +3,7 @@ cmake -S . -B ./build
 cd build
 make
 source config.sh
-clear
+if [ "$1" != '--debug' ]; then
+    clear
+fi
 ./${PROJECT_NAME}

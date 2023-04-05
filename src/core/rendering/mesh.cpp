@@ -11,15 +11,17 @@ Mesh::Mesh() {
     loadMesh();
 }
 
-Mesh::Mesh(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<VertexInfo> format) {
-    m_vertices = vertices;
-    m_indices = indices;
-    m_vertexFormat = format;
+Mesh::Mesh(const Mesh &mesh) : m_vertices(mesh.m_vertices), m_indices(mesh.m_indices), m_vertexFormat(mesh.m_vertexFormat) {
+    loadMesh();
+}
+
+Mesh::Mesh(const std::vector<float> &vertices,const std::vector<unsigned int> &indices,const std::vector<VertexInfo> &format) :
+    m_vertices(vertices), m_indices(indices), m_vertexFormat(format){
     loadMesh();
 }
 
 void Mesh::draw() {
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
+    glBindVertexArray(m_vao);
     glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
 }
 
@@ -46,6 +48,9 @@ void Mesh::loadMesh() {
         glEnableVertexAttribArray(i);
         offset += vLength;
     }
+    glBindVertexArray(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 int Mesh::vertexInfoLength(VertexInfo vi) {
@@ -56,6 +61,6 @@ int Mesh::vertexInfoLength(VertexInfo vi) {
 }
 
 Mesh::~Mesh() {
-    glDeleteBuffers(1, &m_vbo);
-    glDeleteVertexArrays(1, &m_vao);
+    /*glDeleteBuffers(1, &m_vbo);
+    glDeleteVertexArrays(1, &m_vao);*/
 }

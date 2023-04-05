@@ -11,6 +11,7 @@
 #include <glad/glad.h>
 
 #define SHADER_SUPPORT 2
+#define DEFAULT_SHADER "src/shaders/default.glsl"
 
 enum ShaderType {
     NONE = -1,
@@ -23,9 +24,12 @@ class Shader {
     unsigned int m_program;
 
     void parseShader(const std::string &path);
+    void loadShader();
 
 public:
-    Shader(const std::string &path);
+    Shader();
+    Shader(const Shader& shader);
+    explicit Shader(const std::string &path);
     ~Shader();
 
     void bind();
