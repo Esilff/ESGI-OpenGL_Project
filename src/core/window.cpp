@@ -1,6 +1,8 @@
 #include "window.h"
 #include "world/entity.h"
 #include "world/scene.h"
+#include "events/events.h"
+#include "events/eventCallbacks.h"
 
 
 void Window::init() {
@@ -17,10 +19,10 @@ void Window::init() {
     if(!gladLoadGL()) {
         throw std::runtime_error("Unable to initialize GLAD");
     }
-    if (GL_DEBUG_FLAG) {
-        glEnable(GL_DEBUG_OUTPUT);
-        glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
-    }
+    glfwSetKeyCallback(m_window, keyCallback);
+
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
 }
 
 void Window::loop() {
@@ -39,7 +41,10 @@ void Window::loop() {
     while (!glfwWindowShouldClose(m_window)) {
         glClearColor(.1f,.1f,.1f,1.f);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        //Events::getKey(GLFW_KEY_SPACE);
+        if (Events::getKeyDown(GLFW_KEY_SPACE)) {
+            std::cout << "Space key released" << std::endl;
+        }
         s.update();
         glfwSwapBuffers(m_window);
         glfwPollEvents();
@@ -68,4 +73,8 @@ Json::Value Window::readAppInfo() {
         throw std::runtime_error("Unable to parse app.config.json check the file again for errors");
     }
     return root;
+}
+
+GLFWwindow *Window::window() {
+    return m_window;
 }

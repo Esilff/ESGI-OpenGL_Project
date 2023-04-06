@@ -12,7 +12,7 @@ endif()
 add_executable(${PROJECT_NAME}
 src/main.cpp src/core/rendering/mesh.h src/core/rendering/mesh.cpp src/core/rendering/shader.h src/core/rendering/shader.cpp src/core/rendering/texture.h src/core/rendering/texture.cpp
 src/core/window.h src/core/window.cpp
-src/core/world/entity.cpp src/core/world/entity.h src/core/world/scene.cpp src/core/world/scene.h src/core/util/glUtil.h)
+src/core/world/entity.cpp src/core/world/entity.h src/core/world/scene.cpp src/core/world/scene.h src/core/util/glUtil.h src/core/events/events.h src/core/events/Keyboard.cpp src/core/events/Keyboard.h src/core/events/eventCallbacks.h)
 
 #adding GLEW directory to project
 
@@ -44,4 +44,4 @@ else()
 endif()
 #set variables that could be used in cpp
 add_compile_definitions(SOURCE_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
-add_compile_definitions(GL_DEBUG_FLAG=1)
+
