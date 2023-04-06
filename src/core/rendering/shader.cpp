@@ -4,8 +4,53 @@
 
 #include "shader.h"
 
+Shader::Shader() {
+    parseShader(DEFAULT_SHADER);
+    loadShader();
+}
+
+Shader::Shader(const Shader& shader) : m_source(shader.m_source), m_program(shader.m_program) {
+    loadShader();
+}
+
 Shader::Shader(const std::string &path) {
     parseShader(path);
+    loadShader();
+}
+
+Shader::~Shader() {
+    /*unbind();
+    glDeleteProgram(m_program);*/
+}
+
+void Shader::bind() {
+    glUseProgram(m_program);
+}
+
+void Shader::unbind() {
+    glUseProgram(0);
+}
+
+void Shader::parseShader(const std::string &path) {
+    std::array<std::string, SHADER_SUPPORT> sources;
+    std::ifstream file(std::string(SOURCE_DIR) + "/" + path);
+    if (!file.is_open()) {
+        std::cout << "No shader found at : " << path << std::endl;
+    }
+    std::string line;
+    ShaderType index = NONE;
+    while (std::getline(file, line)) {
+        if (line.find("#pragma") != std::string::npos) {
+            if (line.find("vertex") != std::string::npos) index = VERTEX;
+            if (line.find("fragment") != std::string::npos) index = FRAGMENT;
+            continue;
+        }
+        sources[index].append(line + "\n");
+    }
+    m_source = sources;
+}
+
+void Shader::loadShader() {
     const char* vs = m_source[0].c_str();
     const char* fs = m_source[1].c_str();
     unsigned int vertexShader;
@@ -42,36 +87,4 @@ Shader::Shader(const std::string &path) {
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-}
-
-Shader::~Shader() {
-    unbind();
-    glDeleteProgram(m_program);
-}
-
-void Shader::bind() {
-    glUseProgram(m_program);
-}
-
-void Shader::unbind() {
-    glUseProgram(0);
-}
-
-void Shader::parseShader(const std::string &path) {
-    std::array<std::string, SHADER_SUPPORT> sources;
-    std::ifstream file(std::string(SOURCE_DIR) + "/" + path);
-    if (!file.is_open()) {
-        std::cout << "No shader found at : " << path << std::endl;
-    }
-    std::string line;
-    ShaderType index = NONE;
-    while (std::getline(file, line)) {
-        if (line.find("#pragma") != std::string::npos) {
-            if (line.find("vertex") != std::string::npos) index = VERTEX;
-            if (line.find("fragment") != std::string::npos) index = FRAGMENT;
-            continue;
-        }
-        sources[index].append(line + "\n");
-    }
-    m_source = sources;
 }

@@ -10,7 +10,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 endif()
 
 add_executable(${PROJECT_NAME}
-        src/main.cpp src/core/rendering/mesh.h src/core/rendering/mesh.cpp src/core/rendering/shader.h src/core/rendering/shader.cpp src/core/rendering/texture.h src/core/rendering/texture.cpp src/core/util/glUtil.h)
+src/main.cpp src/core/rendering/mesh.h src/core/rendering/mesh.cpp src/core/rendering/shader.h src/core/rendering/shader.cpp src/core/rendering/texture.h src/core/rendering/texture.cpp
+src/core/window.h src/core/window.cpp
+src/core/world/entity.cpp src/core/world/entity.h src/core/world/scene.cpp src/core/world/scene.h src/core/util/glUtil.h)
 
 #adding GLEW directory to project
 
@@ -21,12 +23,19 @@ add_subdirectory(dependencies/glfw-3.3.8)
 include_directories(dependencies/glad/include)
 add_library(glad dependencies/glad/src/glad.c)
 
+#setup stb-image lib
+
 include_directories(dependencies/stb)
 link_directories(dependencies/stb)
 
+add_subdirectory(dependencies/jsoncpp)
+get_target_property(JSON_INC_PATH jsoncpp_static INTERFACE_INCLUDE_DIRECTORIES)
+include_directories(${JSON_INC_PATH})
+
 #linking GLFW, OpenGL and GLAD
 
-target_link_libraries(${PROJECT_NAME} glfw glad)
+target_link_libraries(${PROJECT_NAME} glfw glad jsoncpp_static)
+
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})

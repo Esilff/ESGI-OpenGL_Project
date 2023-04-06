@@ -29,7 +29,8 @@ class Mesh {
 
 public:
     Mesh();
-    Mesh(std::vector<float> vertices, std::vector<unsigned int> indices, std::vector<VertexInfo> format);
+    Mesh(const Mesh& mesh);
+    Mesh(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, const std::vector<VertexInfo> &format);
     ~Mesh();
     void draw();
 
