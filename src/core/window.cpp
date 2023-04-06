@@ -2,6 +2,7 @@
 #include "world/entity.h"
 #include "world/scene.h"
 
+
 void Window::init() {
     setAppParams();
     if (!glfwInit()) {
@@ -15,6 +16,10 @@ void Window::init() {
     glfwMakeContextCurrent(m_window);
     if(!gladLoadGL()) {
         throw std::runtime_error("Unable to initialize GLAD");
+    }
+    if (GL_DEBUG_FLAG) {
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
     }
 }
 

@@ -5,10 +5,11 @@
 #ifndef GLUTIL_H
 #define GLUTIL_H
 #include <glad/glad.h>
+#include <iostream>
 
 namespace GLUtil {
-    void GLAPIENTRY debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, const GLchar* message, const void* userParam) {
-        
+    inline void glDebugCallback(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, int length, const GLchar* message, const void* userParam) {
+        std::cout << "[GL Error] : " << message << std::endl;
     }
 }
 

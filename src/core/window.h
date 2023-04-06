@@ -7,6 +7,10 @@
 #include <fstream>
 #include <stdexcept>
 
+#if GL_DEBUG_FLAG
+#include "util/glUtil.h"
+#endif
+
 class Window {
 
     std::string m_name;
@@ -19,7 +23,7 @@ class Window {
         loop();
     }
     Window(const Window&) {};
-    Window& operator= (const Window& other) {};
+
     void init();
     void loop();
     Json::Value readAppInfo();
