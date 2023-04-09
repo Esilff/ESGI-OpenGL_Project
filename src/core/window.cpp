@@ -1,6 +1,7 @@
 #include "window.h"
 #include "world/entity.h"
 #include "world/scene.h"
+#include "system/Time.h"
 
 
 void Window::init() {
@@ -21,9 +22,16 @@ void Window::init() {
         glEnable(GL_DEBUG_OUTPUT);
         glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
     }
+    m_frameCap = 1.0/m_fps;
+    glfwSwapInterval(1);//Activating vsync by default
 }
 
 void Window::loop() {
+    //Treating time values to check if fps is passing
+    bool canRender = false;
+    double frameTime = 0;
+    double unprocessed = 1;
+    double frames = 0;
     Scene s;
     s.addEntity();
     s.addEntity(Entity {
@@ -37,12 +45,27 @@ void Window::loop() {
             }, Shader()
     });
     while (!glfwWindowShouldClose(m_window)) {
-        glClearColor(.1f,.1f,.1f,1.f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        Time::update();
+        frameTime += Time::dt();
+        unprocessed += Time::dt();
+        while(unprocessed > m_frameCap) {
+            unprocessed -= m_frameCap;
+            canRender = true;
+        }
+        if (canRender) {
+            frames++;
+            glClearColor(.1f,.1f,.1f,1.f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            //s.update();
+            glfwSwapBuffers(m_window);
+            glfwPollEvents();
 
-        s.update();
-        glfwSwapBuffers(m_window);
-        glfwPollEvents();
+            if (frameTime >= 1.0) {
+                frameTime = 0;
+                std::cout << "Fps : " << frames << std::endl;
+                frames = 0;
+            }
+        }
     }
 }
 

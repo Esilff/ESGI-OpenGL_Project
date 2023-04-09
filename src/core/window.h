@@ -18,6 +18,9 @@ class Window {
     int m_height;
     GLFWwindow * m_window;
 
+    int m_fps = 60;
+    double m_frameCap;
+
     Window() {
         init();
         loop();
