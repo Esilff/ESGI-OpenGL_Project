@@ -1,8 +1,7 @@
 #include "window.h"
 #include "world/entity.h"
 #include "world/scene.h"
-#include "events/events.h"
-#include "events/eventCallbacks.h"
+#include "system/Time.h"
 
 
 void Window::init() {
@@ -19,13 +18,20 @@ void Window::init() {
     if(!gladLoadGL()) {
         throw std::runtime_error("Unable to initialize GLAD");
     }
-    glfwSetKeyCallback(m_window, keyCallback);
-
-    glEnable(GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
+    if (GL_DEBUG_FLAG) {
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(GLUtil::glDebugCallback, nullptr);
+    }
+    m_frameCap = 1.0/m_fps;
+    glfwSwapInterval(1);//Activating vsync by default
 }
 
 void Window::loop() {
+    //Treating time values to check if fps is passing
+    bool canRender = false;
+    double frameTime = 0;
+    double unprocessed = 1;
+    double frames = 0;
     Scene s;
     s.addEntity();
     s.addEntity(Entity {
@@ -39,15 +45,27 @@ void Window::loop() {
             }, Shader()
     });
     while (!glfwWindowShouldClose(m_window)) {
-        glClearColor(.1f,.1f,.1f,1.f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        //Events::getKey(GLFW_KEY_SPACE);
-        if (Events::getKeyDown(GLFW_KEY_SPACE)) {
-            std::cout << "Space key released" << std::endl;
+        Time::update();
+        frameTime += Time::dt();
+        unprocessed += Time::dt();
+        while(unprocessed > m_frameCap) {
+            unprocessed -= m_frameCap;
+            canRender = true;
         }
-        s.update();
-        glfwSwapBuffers(m_window);
-        glfwPollEvents();
+        if (canRender) {
+            frames++;
+            glClearColor(.1f,.1f,.1f,1.f);
+            glClear(GL_COLOR_BUFFER_BIT);
+            //s.update();
+            glfwSwapBuffers(m_window);
+            glfwPollEvents();
+
+            if (frameTime >= 1.0) {
+                frameTime = 0;
+                std::cout << "Fps : " << frames << std::endl;
+                frames = 0;
+            }
+        }
     }
 }
 
@@ -73,8 +91,4 @@ Json::Value Window::readAppInfo() {
         throw std::runtime_error("Unable to parse app.config.json check the file again for errors");
     }
     return root;
-}
-
-GLFWwindow *Window::window() {
-    return m_window;
 }
