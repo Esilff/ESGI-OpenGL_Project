@@ -2,6 +2,8 @@
 #include "world/entity.h"
 #include "world/scene.h"
 #include "system/Time.h"
+#include "events/events.h"
+#include "events/eventCallbacks.h"
 
 
 void Window::init() {
@@ -24,6 +26,7 @@ void Window::init() {
     }
     m_frameCap = 1.0/m_fps;
     glfwSwapInterval(1);//Activating vsync by default
+    glfwSetKeyCallback(m_window, keyCallback);
 }
 
 void Window::loop() {
@@ -48,6 +51,7 @@ void Window::loop() {
         Time::update();
         frameTime += Time::dt();
         unprocessed += Time::dt();
+        int spacePressed = 0;
         while(unprocessed > m_frameCap) {
             unprocessed -= m_frameCap;
             canRender = true;

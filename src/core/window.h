@@ -6,10 +6,8 @@
 #include <json/json.h>
 #include <fstream>
 #include <stdexcept>
-
-#if GL_DEBUG_FLAG
 #include "util/glUtil.h"
-#endif
+
 
 class Window {
 
@@ -38,6 +36,8 @@ public:
         static Window instance;
         return instance;
     }
+
+    GLFWwindow * window();
 };
 
 #endif
