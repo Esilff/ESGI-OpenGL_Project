@@ -10,7 +10,7 @@ class Keyboard {
     int m_keys[350];
 
     Keyboard() {
-        for (int i = 0; i < 350; i++) m_keys[i] = 0;
+        for (int i = 0; i < 350; i++) m_keys[i] = -1;
     }
 
     Keyboard(const Keyboard& keyboard) {};

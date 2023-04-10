@@ -9,15 +9,19 @@
 #include "Keyboard.h"
 namespace Events {
     bool getKey(int keycode) {
-        return Keyboard::getInstance()[keycode] == GLFW_REPEAT;
-    }
-
-    bool getKeyDown(int keycode) {
         return Keyboard::getInstance()[keycode] == GLFW_PRESS;
     }
 
+    bool getKeyDown(int keycode) {
+        bool val = Keyboard::getInstance()[keycode] == GLFW_PRESS;
+        if (val) Keyboard::getInstance()[keycode] = -1;
+        return val;
+    }
+
     bool getKeyUp(int keycode) {
-        return Keyboard::getInstance()[keycode] == GLFW_RELEASE;
+        bool val = Keyboard::getInstance()[keycode] == GLFW_RELEASE;
+        Keyboard::getInstance()[keycode] = -1;
+        return val;
     }
 }
 
