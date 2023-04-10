@@ -3,7 +3,7 @@
 #include "world/scene.h"
 #include "system/Time.h"
 #include "events/events.h"
-#include "events/eventCallbacks.h"
+
 
 
 void Window::init() {
@@ -26,7 +26,7 @@ void Window::init() {
     }
     m_frameCap = 1.0/m_fps;
     glfwSwapInterval(1);//Activating vsync by default
-    glfwSetKeyCallback(m_window, keyCallback);
+    setCallbacks();
 }
 
 void Window::loop() {
@@ -51,7 +51,7 @@ void Window::loop() {
         Time::update();
         frameTime += Time::dt();
         unprocessed += Time::dt();
-        int spacePressed = 0;
+
         while(unprocessed > m_frameCap) {
             unprocessed -= m_frameCap;
             canRender = true;
@@ -61,9 +61,11 @@ void Window::loop() {
             glClearColor(.1f,.1f,.1f,1.f);
             glClear(GL_COLOR_BUFFER_BIT);
             //s.update();
+            if (Events::mouseDragging()) {
+                std::cout << "Dragging" << std::endl;
+            }
             glfwSwapBuffers(m_window);
-            glfwPollEvents();
-
+            updateEvents();
             if (frameTime >= 1.0) {
                 frameTime = 0;
                 std::cout << "Fps : " << frames << std::endl;
@@ -71,6 +73,18 @@ void Window::loop() {
             }
         }
     }
+}
+
+void Window::setCallbacks() {
+    glfwSetKeyCallback(m_window, keyCallback);
+    glfwSetCursorPosCallback(m_window,mousePosCallback);
+    glfwSetMouseButtonCallback(m_window, mouseButtonCallback);
+    glfwSetScrollCallback(m_window, mouseScrollCallback);
+}
+
+void Window::updateEvents() {
+    Events::resetScroll();
+    glfwPollEvents();
 }
 
 void Window::setAppParams() {
