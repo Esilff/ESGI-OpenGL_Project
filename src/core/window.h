@@ -7,6 +7,7 @@
 #include <fstream>
 #include <stdexcept>
 #include "util/glUtil.h"
+#include "events/eventCallbacks.h"
 
 
 class Window {
@@ -29,6 +30,8 @@ class Window {
     void loop();
     Json::Value readAppInfo();
     void setAppParams();
+    void setCallbacks();
+    void updateEvents();
 
 public:
 
