@@ -9,6 +9,7 @@
 #include "util/glUtil.h"
 #include "events/eventCallbacks.h"
 
+#include "system/Time.h"
 
 class Window {
 
@@ -16,6 +17,9 @@ class Window {
     int m_width;
     int m_height;
     GLFWwindow * m_window;
+    GLFWmonitor * m_primaryMonitor;
+    GLFWvidmode * m_vidMode;
+    bool m_isFullscreen;
 
     int m_fps = 60;
     double m_frameCap;
@@ -32,6 +36,7 @@ class Window {
     void setAppParams();
     void setCallbacks();
     void updateEvents();
+    void checkWindowEvents();
 
 public:
 

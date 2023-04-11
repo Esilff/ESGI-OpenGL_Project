@@ -29,4 +29,8 @@ inline void mouseScrollCallback(GLFWwindow* window, double xOffset, double yOffs
     Mouse::getInstance().m_scrollY = yOffset;
 }
 
+inline void windowFrameBufferSizeCallback(GLFWwindow * window, int width, int height) {
+    glViewport(0,0,width, height);
+}
+
 #endif //EVENTCALLBACKS_H
