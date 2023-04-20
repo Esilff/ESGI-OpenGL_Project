@@ -1,5 +1,5 @@
 #include "window.h"
-#include "world/entity.h"
+#include "world/Entity.h"
 #include "world/scene.h"
 #include "events/events.h"
 

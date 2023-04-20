@@ -7,7 +7,7 @@
 
 
 #include <vector>
-#include "entity.h"
+#include "Entity.h"
 
 class Scene {
     std::vector<Entity> m_entities;
