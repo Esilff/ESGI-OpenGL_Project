@@ -88,3 +88,7 @@ void Shader::loadShader() {
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 }
+
+void Shader::setUniform(const std::string &name, const Vector &vector) {
+    glUniform3f(glGetUniformLocation(m_program, name.c_str()), vector.x, vector.y, vector.z);
+}

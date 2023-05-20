@@ -2,6 +2,7 @@
 #include "world/Entity.h"
 #include "world/scene.h"
 #include "events/events.h"
+#include <cmath>
 
 void Window::init() {
     setAppParams();
@@ -39,7 +40,9 @@ void Window::loop() {
     double unprocessed = 1;
     double frames = 0;
     Scene s;
-    s.addEntity();
+    //s.addEntity();
+    Shader shader;
+
     s.addEntity(Entity {
             Mesh {
                     {
@@ -48,13 +51,14 @@ void Window::loop() {
                         0.0,1.0f,0.0f,0.0f,0.0f,1.0f,0.0f
                     },
                     {0,1,2}, {XYZ, RGBA}
-            }, Shader()
+            }, shader
     });
+    double timeElapsed = 0;
     while (!glfwWindowShouldClose(m_window)) {
         Time::update();
         frameTime += Time::dt();
         unprocessed += Time::dt();
-
+        timeElapsed+= Time::dt();
         while(unprocessed > m_frameCap) {
             unprocessed -= m_frameCap;
             canRender = true;
@@ -64,6 +68,7 @@ void Window::loop() {
             glClearColor(.1f,.1f,.1f,1.f);
             glClear(GL_COLOR_BUFFER_BIT);
             s.update();
+            shader.setUniform("u_Color", Vector((float) cos(timeElapsed), (float ) cos(timeElapsed), 0));
             glfwSwapBuffers(m_window);
             checkWindowEvents();
             updateEvents();

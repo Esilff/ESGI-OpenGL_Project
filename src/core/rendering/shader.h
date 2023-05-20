@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <glad/glad.h>
+#include "../math/vector.h"
 
 #define SHADER_SUPPORT 2
 #define DEFAULT_SHADER "src/shaders/default.glsl"
@@ -34,6 +35,8 @@ public:
 
     void bind();
     void unbind();
+
+    void setUniform(const std::string& name, const Vector& vector);
 };
 
 
