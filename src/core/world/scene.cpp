@@ -5,7 +5,7 @@
 #include "scene.h"
 
 void Scene::update() {
-    for (int i = 0; i < m_entities.size(); i++) m_entities[i].update();
+//    for (int i = 0; i < m_entities.size(); i++) m_entities[i].update();
 }
 
 void Scene::addEntity() {
