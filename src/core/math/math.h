@@ -107,6 +107,24 @@ struct Quaternion {
     }
 };
 
+struct Matrix {
+    float** matrix;
+
+    void operator+(const Matrix& matrix);
+    void operator-(const Matrix& matrix);
+    void operator/(const Matrix& matrix);
+    void operator*(float constant);
+    void operator*(const Matrix& matrix);
+
+
+    Matrix();
+
+
+    // il faut les opérations basiques : +, -, /, * et les puissances s'il faut.
+    // on peut ajouter aussi la matrice identité et la matrice inverse. La transposition et le conjugué
+
+};
+
 struct Transform {
     Vector3 position, scale{ 1, 1, 1 };
     Quaternion rotation;
