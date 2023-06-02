@@ -2,7 +2,7 @@
 #include "world/Entity.h"
 #include "world/scene.h"
 #include "events/events.h"
-#include <cmath>
+
 
 void Window::init() {
     setAppParams();
@@ -72,7 +72,7 @@ void Window::loop() {
     Camera cam;
     cam.setAspectRatio(m_width/m_height);
     double timeElapsed = 0;
-    cam.Move(Vector(0,0,-1));
+    cam.Move(Vector(0,0,-2));
     glEnable(GL_DEPTH_TEST);
     //e.Rotate(Vector(0,45,0));
     while (!glfwWindowShouldClose(m_window)) {
@@ -107,18 +107,7 @@ void Window::loop() {
             if (Events::getKey(GLFW_KEY_LEFT_SHIFT)) {
                 cam.Move(Vector(0,-1 * Time::dt(),0));
             }
-            if (Events::mouseDelta()[0] > 0) {
-                cam.Rotate(Vector(0,1 * Time::dt(),0));
-            }
-            if (Events::mouseDelta()[0] < 0) {
-                cam.Rotate(Vector(0,-1 * Time::dt(),0));
-            }
-            if (Events::mouseDelta()[1] > 0) {
-                cam.Rotate(Vector(0,0,1 * Time::dt()));
-            }
-            if (Events::mouseDelta()[1] < 0) {
-                cam.Rotate(Vector(0,0,-1 * Time::dt()));
-            }
+            e.Rotate(Vector(1 * Time::dt(),1 * Time::dt(),1 * Time::dt()));
             glfwSwapBuffers(m_window);
             checkWindowEvents();
 
