@@ -90,22 +90,22 @@ void Window::loop() {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             e.render(cam);
             if (Events::getKey(GLFW_KEY_Z)) {
-                e.Move(Vector(0,0,1 * Time::dt()));
+                cam.Move(Vector(0,0,1 * Time::dt()));
             }
             if (Events::getKey(GLFW_KEY_S)) {
-                e.Move(Vector(0,0, -1 * Time::dt()));
+                cam.Move(Vector(0,0, -1 * Time::dt()));
             }
             if (Events::getKey(GLFW_KEY_A)) {
-                e.Move(Vector(-1 * Time::dt(),0,0));
+                cam.Move(Vector(-1 * Time::dt(),0,0));
             }
             if (Events::getKey(GLFW_KEY_D)) {
-                e.Move(Vector(1 * Time::dt(),0,0));
+                cam.Move(Vector(1 * Time::dt(),0,0));
             }
             if (Events::getKey(GLFW_KEY_SPACE)) {
-                e.Move(Vector(0,1 * Time::dt(),0));
+                cam.Move(Vector(0,1 * Time::dt(),0));
             }
             if (Events::getKey(GLFW_KEY_LEFT_SHIFT)) {
-                e.Move(Vector(0,-1 * Time::dt(),0));
+                cam.Move(Vector(0,-1 * Time::dt(),0));
             }
             if (Events::mouseDelta()[0] > 0) {
                 cam.Rotate(Vector(0,1 * Time::dt(),0));
