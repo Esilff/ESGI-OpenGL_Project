@@ -2,7 +2,7 @@
 #include "world/Entity.h"
 #include "world/scene.h"
 #include "events/events.h"
-#include <cmath>
+
 
 void Window::init() {
     setAppParams();
@@ -43,17 +43,38 @@ void Window::loop() {
     //s.addEntity();
     Shader shader;
 
-    s.addEntity(Entity {
+    Entity e = Entity(
             Mesh {
                     {
-                        1.0f,0.0f,0.0f,1.0f,0.0f,0.0f,1.0f,
-                        1.0f,1.0f,0.0f,0.0f,1.0f,0.0f,1.0f,
-                        0.0,1.0f,0.0f,0.0f,0.0f,1.0f,0.0f
+                                       -0.5f, -0.5f,  0.5f, // Vertex 0
+                            0.5f, -0.5f,  0.5f, // Vertex 1
+                            0.5f,  0.5f,  0.5f, // Vertex 2
+                            -0.5f,  0.5f,  0.5f, // Vertex 3
+                            -0.5f, -0.5f, -0.5f, // Vertex 4
+                            0.5f, -0.5f, -0.5f, // Vertex 5
+                            0.5f,  0.5f, -0.5f, // Vertex 6
+                            -0.5f,  0.5f, -0.5f  // Vertex 7
                     },
-                    {0,1,2}, {XYZ, RGBA}
+                    {0, 1, 2, // Front face
+                            2, 3, 0,
+                            1, 5, 6, // Right face
+                            6, 2, 1,
+                            4, 0, 3, // Left face
+                            3, 7, 4,
+                            4, 5, 1, // Bottom face
+                            1, 0, 4,
+                            3, 2, 6, // Top face
+                            6, 7, 3,
+                            7, 6, 5, // Back face
+                            5, 4, 7}, {XYZ}
             }, shader
-    });
+    );
+    Camera cam;
+    cam.setAspectRatio(m_width/m_height);
     double timeElapsed = 0;
+    cam.Move(Vector(0,0,-2));
+    glEnable(GL_DEPTH_TEST);
+    //e.Rotate(Vector(0,45,0));
     while (!glfwWindowShouldClose(m_window)) {
         Time::update();
         frameTime += Time::dt();
@@ -66,18 +87,37 @@ void Window::loop() {
         if (canRender) {
             frames++;
             glClearColor(.1f,.1f,.1f,1.f);
-            glClear(GL_COLOR_BUFFER_BIT);
-            s.update();
-            shader.setUniform("u_Color", Vector((float) cos(timeElapsed), (float ) cos(timeElapsed), 0));
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            e.render(cam);
+            if (Events::getKey(GLFW_KEY_Z)) {
+                cam.Move(Vector(0,0,1 * Time::dt()));
+            }
+            if (Events::getKey(GLFW_KEY_S)) {
+                cam.Move(Vector(0,0, -1 * Time::dt()));
+            }
+            if (Events::getKey(GLFW_KEY_A)) {
+                cam.Move(Vector(-1 * Time::dt(),0,0));
+            }
+            if (Events::getKey(GLFW_KEY_D)) {
+                cam.Move(Vector(1 * Time::dt(),0,0));
+            }
+            if (Events::getKey(GLFW_KEY_SPACE)) {
+                cam.Move(Vector(0,1 * Time::dt(),0));
+            }
+            if (Events::getKey(GLFW_KEY_LEFT_SHIFT)) {
+                cam.Move(Vector(0,-1 * Time::dt(),0));
+            }
+            e.Rotate(Vector(1 * Time::dt(),1 * Time::dt(),1 * Time::dt()));
             glfwSwapBuffers(m_window);
             checkWindowEvents();
-            updateEvents();
+
             if (frameTime >= 1.0) {
                 frameTime = 0;
                 std::cout << "Fps : " << frames << std::endl;
                 frames = 0;
             }
         }
+        updateEvents();
     }
 }
 
@@ -92,6 +132,7 @@ void Window::setCallbacks() {
 void Window::updateEvents() {
     Events::resetScroll();
     glfwPollEvents();
+
 }
 
 void Window::checkWindowEvents() {

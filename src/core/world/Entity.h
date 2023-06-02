@@ -7,14 +7,21 @@
 
 #include "../rendering/mesh.h"
 #include "../rendering/shader.h"
+#include "transform.h"
+#include "Camera.h"
 
 class Entity{
+    Transform transform;
     Mesh m_mesh;
     Shader m_shader;
 public:
     Entity();
     Entity(const Mesh &mesh, const Shader &shader);
-    void update();
+    void render(const Camera& camera);
+
+    void Move(const Vector& vector);
+    void SetPosition(const Vector& vector);
+    void Rotate(const Vector& rotate);
 };
 
 

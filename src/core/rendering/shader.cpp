@@ -89,6 +89,6 @@ void Shader::loadShader() {
     glDeleteShader(fragmentShader);
 }
 
-void Shader::setUniform(const std::string &name, const Vector &vector) {
-    glUniform3f(glGetUniformLocation(m_program, name.c_str()), vector.x, vector.y, vector.z);
+void Shader::setUniform(const std::string& name, float *matrix) {
+    glUniformMatrix4fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, matrix);
 }

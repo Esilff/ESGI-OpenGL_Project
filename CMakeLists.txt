@@ -13,7 +13,7 @@ add_executable(${PROJECT_NAME}
 src/main.cpp src/core/rendering/mesh.h src/core/rendering/mesh.cpp src/core/rendering/shader.h src/core/rendering/shader.cpp src/core/rendering/texture.h src/core/rendering/texture.cpp
 src/core/window.h src/core/window.cpp
 src/core/world/Entity.cpp src/core/world/Entity.h src/core/world/scene.cpp src/core/world/scene.h src/core/util/glUtil.h src/core/system/Time.cpp src/core/system/Time.h
-src/core/events/events.h src/core/events/eventCallbacks.h src/core/events/Keyboard.h src/core/events/Keyboard.cpp src/core/events/Mouse.cpp src/core/events/Mouse.h src/core/math/vector.cpp src/core/math/vector.h)
+src/core/events/events.h src/core/events/eventCallbacks.h src/core/events/Keyboard.h src/core/events/Keyboard.cpp src/core/events/Mouse.cpp src/core/events/Mouse.h src/core/math/math.h src/core/math/math.cpp src/core/world/transform.cpp src/core/world/transform.h src/core/world/Camera.cpp src/core/world/Camera.h)
 
 #adding GLEW directory to project
 
